@@ -1,21 +1,16 @@
 package ru.vktestovoe.jbisss.controller;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.RequestMapping;
+import ru.vktestovoe.jbisss.config.ApplicationConstants;
 import ru.vktestovoe.jbisss.dto.AlbumDto;
 import ru.vktestovoe.jbisss.service.AlbumService;
 
-import java.util.List;
-
 @RestController
-@RequiredArgsConstructor
-public class AlbumController extends BaseController {
+@RequestMapping(ApplicationConstants.Url.ALBUMS_URL)
+public class AlbumController extends BaseController<AlbumDto> {
 
-    private final AlbumService albumService;
-
-    @GetMapping("/albums")
-    public List<AlbumDto> getAlbums() {
-        return albumService.getAllAlbums();
+    public AlbumController(AlbumService albumService) {
+        super(albumService);
     }
 }

@@ -1,21 +1,16 @@
 package ru.vktestovoe.jbisss.controller;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.vktestovoe.jbisss.config.ApplicationConstants;
 import ru.vktestovoe.jbisss.dto.PostDto;
 import ru.vktestovoe.jbisss.service.PostService;
 
-import java.util.List;
-
 @RestController
-@RequiredArgsConstructor
-public class PostController extends BaseController {
+@RequestMapping(ApplicationConstants.Url.POST_URL)
+public class PostController extends BaseController<PostDto> {
 
-    private final PostService postService;
-
-    @GetMapping("/posts")
-    public List<PostDto> getPosts() {
-        return postService.getPosts();
+    public PostController(PostService postService) {
+        super(postService);
     }
 }

@@ -6,10 +6,10 @@ import lombok.Data;
 public class UserDto {
 
     @Data
-    private static class Address {
+    public static class Address {
 
         @Data
-        private static class Geo {
+        public static class Geo {
 
             private String lat;
             private String lng;
