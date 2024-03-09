@@ -13,7 +13,6 @@ import ru.vktestovoe.jbisss.service.RestCrudService;
 
 import java.util.List;
 
-@RequestMapping(ApplicationConstants.Url.API_URL)
 @RequiredArgsConstructor
 abstract public class BaseController<DTO> {
 
