@@ -2,8 +2,6 @@ package ru.vktestovoe.jbisss.service;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import ru.vktestovoe.jbisss.dto.AlbumDto;
-import ru.vktestovoe.jbisss.dto.PostDto;
 import ru.vktestovoe.jbisss.dto.UserDto;
 import ru.vktestovoe.jbisss.service.config.TestConfig;
 
