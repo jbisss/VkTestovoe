@@ -7,7 +7,7 @@ import ru.vktestovoe.jbisss.dto.AlbumDto;
 import ru.vktestovoe.jbisss.service.AlbumService;
 
 @RestController
-@RequestMapping(ApplicationConstants.Url.ALBUMS_URL)
+@RequestMapping(ApplicationConstants.Url.API_URL + ApplicationConstants.Url.ALBUMS_URL)
 public class AlbumController extends BaseController<AlbumDto> {
 
     public AlbumController(AlbumService albumService) {

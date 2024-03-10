@@ -7,7 +7,7 @@ import ru.vktestovoe.jbisss.dto.UserDto;
 import ru.vktestovoe.jbisss.service.UserService;
 
 @RestController
-@RequestMapping(ApplicationConstants.Url.USERS_URL)
+@RequestMapping(ApplicationConstants.Url.API_URL + ApplicationConstants.Url.USERS_URL)
 public class UserController extends BaseController<UserDto> {
 
     public UserController(UserService userService) {
