@@ -8,7 +8,7 @@ import ru.vktestovoe.jbisss.dto.AlbumDto;
 @Service
 public class AlbumService extends BaseService<AlbumDto> {
 
-    public AlbumService(RestTemplate restTemplate) {
-        super(restTemplate, ApplicationConstants.Url.ALBUMS_URL);
+    public AlbumService(RequestHandlerService requestHandlerService, RestTemplate restTemplate) {
+        super(requestHandlerService, restTemplate, ApplicationConstants.Url.ALBUMS_URL);
     }
 }

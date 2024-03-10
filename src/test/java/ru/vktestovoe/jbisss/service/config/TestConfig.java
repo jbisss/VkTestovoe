@@ -3,13 +3,15 @@ package ru.vktestovoe.jbisss.service.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
-import ru.vktestovoe.jbisss.service.AlbumService;
-import ru.vktestovoe.jbisss.service.CommentService;
-import ru.vktestovoe.jbisss.service.PostService;
-import ru.vktestovoe.jbisss.service.UserService;
+import ru.vktestovoe.jbisss.service.*;
 
 @Configuration
 public class TestConfig {
+
+    @Bean
+    public RequestHandlerService requestHandlerService(RestTemplate restTemplate) {
+        return new RequestHandlerService(restTemplate);
+    }
 
     @Bean
     public RestTemplate restTemplate() {
@@ -22,17 +24,17 @@ public class TestConfig {
     }
 
     @Bean
-    public PostService postService(RestTemplate restTemplate, CommentService commentService) {
-        return new PostService(restTemplate, commentService);
+    public PostService postService(RequestHandlerService requestHandlerService, RestTemplate restTemplate, CommentService commentService) {
+        return new PostService(requestHandlerService, restTemplate, commentService);
     }
 
     @Bean
-    public AlbumService albumService(RestTemplate restTemplate) {
-        return new AlbumService(restTemplate);
+    public AlbumService albumService(RequestHandlerService requestHandlerService, RestTemplate restTemplate) {
+        return new AlbumService(requestHandlerService, restTemplate);
     }
 
     @Bean
-    public UserService userService(RestTemplate restTemplate) {
-        return new UserService(restTemplate);
+    public UserService userService(RequestHandlerService requestHandlerService, RestTemplate restTemplate) {
+        return new UserService(requestHandlerService, restTemplate);
     }
 }

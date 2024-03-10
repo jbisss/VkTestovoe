@@ -1,5 +1,7 @@
 package ru.vktestovoe.jbisss.service;
 
+import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpMethod;
@@ -14,11 +16,13 @@ import java.util.List;
 
 abstract public class BaseService<DTO> implements RestCrudService<DTO> {
 
+    private final RequestHandlerService requestHandlerService;
     protected final RestTemplate restTemplate;
 
     protected final String serviceUrl;
 
-    protected BaseService(RestTemplate restTemplate, String serviceUrl) {
+    protected BaseService(RequestHandlerService requestHandlerService, RestTemplate restTemplate, String serviceUrl) {
+        this.requestHandlerService = requestHandlerService;
         this.restTemplate = restTemplate;
         this.serviceUrl = ApplicationConstants.Url.JSON_PLACE_HOLDER_URL + serviceUrl;
     }
@@ -41,57 +45,77 @@ abstract public class BaseService<DTO> implements RestCrudService<DTO> {
     @Override
     public List<DTO> getList() {
         ParameterizedTypeReference<List<DTO>> responseType = new ParameterizedTypeReference<>() {};
-        ResponseEntity<List<DTO>> response = restTemplate.exchange(serviceUrl, HttpMethod.GET, null, responseType);
+        ResponseEntity<?> response = requestHandlerService.handleRequest(serviceUrl, HttpMethod.GET, null, responseType);
 
         if (response.getStatusCode() != HttpStatus.OK) {
             throw new RuntimeException(String.valueOf(response.getStatusCode()));
         }
-        return response.getBody();
+        return (List<DTO>) response.getBody();
     }
 
     @Override
     public DTO get(String dtoId) {
         final String entireUrl = serviceUrl + ApplicationConstants.SLASH + dtoId;
-        ResponseEntity<DTO> response = restTemplate.exchange(entireUrl, HttpMethod.GET, null, getDtoType());
+        ResponseEntity<?> response = requestHandlerService.handleRequest(entireUrl, HttpMethod.GET, null, getDtoType());
 
         if (response.getStatusCode() != HttpStatus.OK) {
             throw new RuntimeException(String.valueOf(response.getStatusCode()));
         }
-        return response.getBody();
+        return (DTO) response.getBody();
     }
 
     @Override
     public DTO post(DTO dto) {
         HttpEntity<DTO> requestEntity = new HttpEntity<>(dto);
-        ResponseEntity<DTO> response = restTemplate.postForEntity(serviceUrl, requestEntity, getDtoType());
+        ResponseEntity<?> response = requestHandlerService.handleRequest(serviceUrl, HttpMethod.POST, requestEntity, getDtoType());
 
         if (response.getStatusCode() != HttpStatus.CREATED) {
             throw new RuntimeException(String.valueOf(response.getStatusCode()));
         }
 
-        return response.getBody();
+        return (DTO) response.getBody();
     }
 
     @Override
     public DTO put(String dtoId, DTO dto) {
         final String entireUrl = serviceUrl + ApplicationConstants.SLASH + dtoId;
         HttpEntity<DTO> requestEntity = new HttpEntity<>(dto);
-        ResponseEntity<DTO> response = restTemplate.exchange(entireUrl, HttpMethod.PUT, requestEntity, getDtoType());
+        ResponseEntity<?> response = requestHandlerService.handleRequest(entireUrl, HttpMethod.PUT, requestEntity, getDtoType());
 
         if (response.getStatusCode() != HttpStatus.OK) {
             throw new RuntimeException(String.valueOf(response.getStatusCode()));
         }
-        return response.getBody();
+        return (DTO) response.getBody();
     }
 
     @Override
     public String delete(String dtoId) {
         final String entireUrl = serviceUrl + ApplicationConstants.SLASH + dtoId;
-        ResponseEntity<DTO> response = restTemplate.exchange(entireUrl, HttpMethod.DELETE, null, getDtoType());
+        ResponseEntity<?> response = requestHandlerService.handleRequest(entireUrl, HttpMethod.DELETE, null, getDtoType());
 
         if (response.getStatusCode() != HttpStatus.OK) {
             throw new RuntimeException(String.valueOf(response.getStatusCode()));
         }
         return HttpStatus.OK.toString();
     }
+//
+//    @Nonnull
+//    public ResponseEntity<DTO> handleRequest(@Nonnull String url, @Nonnull HttpMethod httpMethod, @Nullable HttpEntity<DTO> requestEntity) {
+//        ResponseEntity<DTO> response = restTemplate.exchange(url, httpMethod, requestEntity, getDtoType());
+//
+//        if (response.getStatusCode() != HttpStatus.OK || response.getStatusCode() != HttpStatus.CREATED) {
+//            throw new RuntimeException(String.valueOf(response.getStatusCode()));
+//        }
+//        return response;
+//    }
+//
+//    @Nonnull
+//    public ResponseEntity<?> handleRequest(@Nonnull String url, @Nonnull HttpMethod httpMethod, @Nullable HttpEntity<?> requestEntity, ParameterizedTypeReference<?> responseType) {
+//        ResponseEntity<?> response = restTemplate.exchange(url, httpMethod, requestEntity, responseType);
+//
+//        if (response.getStatusCode() != HttpStatus.OK || response.getStatusCode() != HttpStatus.CREATED) {
+//            throw new RuntimeException(String.valueOf(response.getStatusCode()));
+//        }
+//        return response;
+//    }
 }

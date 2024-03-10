@@ -13,8 +13,8 @@ public class PostService extends BaseService<PostDto> {
 
     private final CommentService commentService;
 
-    public PostService(RestTemplate restTemplate, CommentService commentService) {
-        super(restTemplate, ApplicationConstants.Url.POST_URL);
+    public PostService(RequestHandlerService requestHandlerService, RestTemplate restTemplate, CommentService commentService) {
+        super(requestHandlerService, restTemplate, ApplicationConstants.Url.POST_URL);
         this.commentService = commentService;
     }
 

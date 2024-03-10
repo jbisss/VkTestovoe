@@ -8,8 +8,8 @@ import ru.vktestovoe.jbisss.dto.UserDto;
 @Service
 public class UserService extends BaseService<UserDto> {
 
-    public UserService(RestTemplate restTemplate) {
-        super(restTemplate, ApplicationConstants.Url.USERS_URL);
+    public UserService(RequestHandlerService requestHandlerService, RestTemplate restTemplate) {
+        super(requestHandlerService, restTemplate, ApplicationConstants.Url.USERS_URL);
     }
 
 }
