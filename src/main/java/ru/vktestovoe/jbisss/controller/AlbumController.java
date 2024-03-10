@@ -8,7 +8,7 @@ import ru.vktestovoe.jbisss.service.AlbumService;
 
 @RestController
 @RequestMapping(ApplicationConstants.Url.ALBUMS_URL)
-public class AlbumController extends ParameterizedController<AlbumDto> {
+public class AlbumController extends BaseController<AlbumDto> {
 
     public AlbumController(AlbumService albumService) {
         super(albumService);
