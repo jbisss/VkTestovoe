@@ -20,18 +20,18 @@ public class RequestHandlerService {
     @Nonnull
     public ResponseEntity<?> handleRequest(@Nonnull String url, @Nonnull HttpMethod httpMethod, @Nullable HttpEntity<?> requestEntity, @Nonnull Class<?> type) {
         ResponseEntity<?> response = restTemplate.exchange(url, httpMethod, requestEntity, type);
-
-        if (response.getStatusCode() != HttpStatus.OK || response.getStatusCode() != HttpStatus.CREATED) {
-            throw new RuntimeException(String.valueOf(response.getStatusCode()));
-        }
-        return response;
+        return handleResponseStatusCode(response);
     }
 
     @Nonnull
     public ResponseEntity<?> handleRequest(@Nonnull String url, @Nonnull HttpMethod httpMethod, @Nullable HttpEntity<?> requestEntity, ParameterizedTypeReference<?> responseType) {
         ResponseEntity<?> response = restTemplate.exchange(url, httpMethod, requestEntity, responseType);
+        return handleResponseStatusCode(response);
+    }
 
-        if (response.getStatusCode() != HttpStatus.OK || response.getStatusCode() != HttpStatus.CREATED) {
+    @Nonnull
+    private ResponseEntity<?> handleResponseStatusCode(@Nonnull ResponseEntity<?> response) {
+        if (response.getStatusCode() != HttpStatus.OK && response.getStatusCode() != HttpStatus.CREATED) {
             throw new RuntimeException(String.valueOf(response.getStatusCode()));
         }
         return response;

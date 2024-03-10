@@ -9,5 +9,4 @@ class VkTestovoeApplicationTests {
     @Test
     void contextLoads() {
     }
-
 }
