@@ -15,6 +15,13 @@ public interface ApplicationConstants {
     }
 
     interface Exception {
+
         String REQUEST_FAIL = "Request can't be handled!";
+    }
+
+    interface Cash {
+
+        // such values should be injected through config file (.yml)
+        Integer CASH_SIZE = 30;
     }
 }

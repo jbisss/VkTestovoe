@@ -1,8 +1,8 @@
 package ru.vktestovoe.jbisss.service.api;
 
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import ru.vktestovoe.jbisss.config.ApplicationConstants;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -10,9 +10,6 @@ import java.util.Optional;
 
 @Service
 public class ApiCacheRequestHandlerService {
-
-    @Value("${api.cache.size}")
-    private String cacheSize;
 
     private Map<String, ResponseEntity<?>> cache = new HashMap<>();
 
@@ -25,7 +22,7 @@ public class ApiCacheRequestHandlerService {
     }
 
     public void updateCache(String key, ResponseEntity<?> value) {
-        if (cache.size() > Integer.parseInt(cacheSize)) {
+        if (cache.size() > ApplicationConstants.Cash.CASH_SIZE) {
             clearCache();
         }
         cache.put(key, value);
