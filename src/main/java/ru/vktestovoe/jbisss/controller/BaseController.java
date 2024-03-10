@@ -17,7 +17,7 @@ abstract public class BaseController<DTO> {
     private final RestCrudService<DTO> restCrudService;
 
     @GetMapping
-    public List<DTO> getAlbums() {
+    public List<DTO> getList() {
         return restCrudService.getList();
     }
 
