@@ -4,12 +4,13 @@ import org.springframework.stereotype.Service;
 import ru.vktestovoe.jbisss.config.ApplicationConstants;
 import ru.vktestovoe.jbisss.dto.UserDto;
 import ru.vktestovoe.jbisss.service.api.ApiHttpRequestHandlerService;
+import ru.vktestovoe.jbisss.service.api.ApiRequestService;
 
 @Service
 public class UserService extends BaseService<UserDto> {
 
-    public UserService(ApiHttpRequestHandlerService apiHttpRequestHandlerService) {
-        super(apiHttpRequestHandlerService, ApplicationConstants.Url.USERS_URL);
+    public UserService(ApiRequestService apiRequestService) {
+        super(apiRequestService, ApplicationConstants.Url.USERS_URL);
     }
 
 }

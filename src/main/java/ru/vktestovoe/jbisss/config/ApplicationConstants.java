@@ -13,4 +13,8 @@ public interface ApplicationConstants {
         String COMMENTS_URL = "/comments";
         String USERS_URL = "/users";
     }
+
+    interface Exception {
+        String REQUEST_FAIL = "Request can't be handled!";
+    }
 }

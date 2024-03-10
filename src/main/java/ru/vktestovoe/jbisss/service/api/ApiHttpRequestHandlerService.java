@@ -18,13 +18,13 @@ public class ApiHttpRequestHandlerService {
     private final RestTemplate restTemplate;
 
     @Nonnull
-    public ResponseEntity<?> handleRequest(@Nonnull String url, @Nonnull HttpMethod httpMethod, @Nullable HttpEntity<?> requestEntity, @Nonnull Class<?> type) {
+    public ResponseEntity<?> httpRequest(@Nonnull String url, @Nonnull HttpMethod httpMethod, @Nullable HttpEntity<?> requestEntity, @Nonnull Class<?> type) {
         ResponseEntity<?> response = restTemplate.exchange(url, httpMethod, requestEntity, type);
         return handleResponseStatusCode(response);
     }
 
     @Nonnull
-    public ResponseEntity<?> handleRequest(@Nonnull String url, @Nonnull HttpMethod httpMethod, @Nullable HttpEntity<?> requestEntity, ParameterizedTypeReference<?> responseType) {
+    public ResponseEntity<?> httpRequest(@Nonnull String url, @Nonnull HttpMethod httpMethod, @Nullable HttpEntity<?> requestEntity, ParameterizedTypeReference<?> responseType) {
         ResponseEntity<?> response = restTemplate.exchange(url, httpMethod, requestEntity, responseType);
         return handleResponseStatusCode(response);
     }
