@@ -8,7 +8,7 @@ import ru.vktestovoe.jbisss.service.UserService;
 
 @RestController
 @RequestMapping(ApplicationConstants.Url.USERS_URL)
-public class UserController extends BaseController<UserDto> {
+public class UserController extends ParameterizedController<UserDto> {
 
     public UserController(UserService userService) {
         super(userService);

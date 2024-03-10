@@ -12,7 +12,7 @@ import ru.vktestovoe.jbisss.service.RestCrudService;
 import java.util.List;
 
 @RequiredArgsConstructor
-abstract public class BaseController<DTO> {
+abstract public class ParameterizedController<DTO> {
 
     private final RestCrudService<DTO> restCrudService;
 

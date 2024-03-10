@@ -8,7 +8,7 @@ import ru.vktestovoe.jbisss.service.PostService;
 
 @RestController
 @RequestMapping(ApplicationConstants.Url.POST_URL)
-public class PostController extends BaseController<PostDto> {
+public class PostController extends ParameterizedController<PostDto> {
 
     public PostController(PostService postService) {
         super(postService);
