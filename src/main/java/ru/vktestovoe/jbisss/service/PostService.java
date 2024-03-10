@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 import ru.vktestovoe.jbisss.config.ApplicationConstants;
 import ru.vktestovoe.jbisss.dto.CommentDto;
 import ru.vktestovoe.jbisss.dto.PostDto;
+import ru.vktestovoe.jbisss.service.api.ApiHttpRequestHandlerService;
 
 import java.util.List;
 
@@ -12,8 +13,8 @@ public class PostService extends BaseService<PostDto> {
 
     private final CommentService commentService;
 
-    public PostService(RequestHandlerService requestHandlerService, CommentService commentService) {
-        super(requestHandlerService, ApplicationConstants.Url.POST_URL);
+    public PostService(ApiHttpRequestHandlerService apiHttpRequestHandlerService, CommentService commentService) {
+        super(apiHttpRequestHandlerService, ApplicationConstants.Url.POST_URL);
         this.commentService = commentService;
     }
 

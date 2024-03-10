@@ -3,7 +3,7 @@ package ru.vktestovoe.jbisss.service.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.client.RestTemplate;
-import ru.vktestovoe.jbisss.service.RequestHandlerService;
+import ru.vktestovoe.jbisss.service.api.ApiHttpRequestHandlerService;
 import ru.vktestovoe.jbisss.service.AlbumService;
 import ru.vktestovoe.jbisss.service.CommentService;
 import ru.vktestovoe.jbisss.service.PostService;
@@ -13,8 +13,8 @@ import ru.vktestovoe.jbisss.service.UserService;
 public class TestConfig {
 
     @Bean
-    public RequestHandlerService requestHandlerService(RestTemplate restTemplate) {
-        return new RequestHandlerService(restTemplate);
+    public ApiHttpRequestHandlerService requestHandlerService(RestTemplate restTemplate) {
+        return new ApiHttpRequestHandlerService(restTemplate);
     }
 
     @Bean
@@ -23,22 +23,22 @@ public class TestConfig {
     }
 
     @Bean
-    public CommentService commentService(RequestHandlerService requestHandlerService) {
-        return new CommentService(requestHandlerService);
+    public CommentService commentService(ApiHttpRequestHandlerService apiHttpRequestHandlerService) {
+        return new CommentService(apiHttpRequestHandlerService);
     }
 
     @Bean
-    public PostService postService(RequestHandlerService requestHandlerService, CommentService commentService) {
-        return new PostService(requestHandlerService, commentService);
+    public PostService postService(ApiHttpRequestHandlerService apiHttpRequestHandlerService, CommentService commentService) {
+        return new PostService(apiHttpRequestHandlerService, commentService);
     }
 
     @Bean
-    public AlbumService albumService(RequestHandlerService requestHandlerService) {
-        return new AlbumService(requestHandlerService);
+    public AlbumService albumService(ApiHttpRequestHandlerService apiHttpRequestHandlerService) {
+        return new AlbumService(apiHttpRequestHandlerService);
     }
 
     @Bean
-    public UserService userService(RequestHandlerService requestHandlerService) {
-        return new UserService(requestHandlerService);
+    public UserService userService(ApiHttpRequestHandlerService apiHttpRequestHandlerService) {
+        return new UserService(apiHttpRequestHandlerService);
     }
 }

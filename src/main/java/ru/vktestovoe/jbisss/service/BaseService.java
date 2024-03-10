@@ -5,6 +5,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpEntity;
 import ru.vktestovoe.jbisss.config.ApplicationConstants;
+import ru.vktestovoe.jbisss.service.api.ApiHttpRequestHandlerService;
 
 import java.lang.reflect.ParameterizedType;
 import java.lang.reflect.Type;
@@ -12,12 +13,12 @@ import java.util.List;
 
 abstract public class BaseService<DTO> implements RestCrudService<DTO> {
 
-    protected final RequestHandlerService requestHandlerService;
+    protected final ApiHttpRequestHandlerService apiHttpRequestHandlerService;
 
     protected final String serviceUrl;
 
-    protected BaseService(RequestHandlerService requestHandlerService, String serviceUrl) {
-        this.requestHandlerService = requestHandlerService;
+    protected BaseService(ApiHttpRequestHandlerService apiHttpRequestHandlerService, String serviceUrl) {
+        this.apiHttpRequestHandlerService = apiHttpRequestHandlerService;
         this.serviceUrl = ApplicationConstants.Url.JSON_PLACE_HOLDER_URL + serviceUrl;
     }
 
@@ -40,7 +41,7 @@ abstract public class BaseService<DTO> implements RestCrudService<DTO> {
     @SuppressWarnings("unchecked")
     public List<DTO> getList() {
         ParameterizedTypeReference<List<DTO>> responseType = new ParameterizedTypeReference<>() {};
-        ResponseEntity<?> response = requestHandlerService.handleRequest(serviceUrl, HttpMethod.GET, null, responseType);
+        ResponseEntity<?> response = apiHttpRequestHandlerService.handleRequest(serviceUrl, HttpMethod.GET, null, responseType);
 
         return (List<DTO>) response.getBody();
     }
@@ -48,7 +49,7 @@ abstract public class BaseService<DTO> implements RestCrudService<DTO> {
     @Override
     public DTO get(String dtoId) {
         final String entireUrl = serviceUrl + ApplicationConstants.SLASH + dtoId;
-        ResponseEntity<?> response = requestHandlerService.handleRequest(entireUrl, HttpMethod.GET, null, getDtoType());
+        ResponseEntity<?> response = apiHttpRequestHandlerService.handleRequest(entireUrl, HttpMethod.GET, null, getDtoType());
 
         return getDtoType().cast(response.getBody());
     }
@@ -56,7 +57,7 @@ abstract public class BaseService<DTO> implements RestCrudService<DTO> {
     @Override
     public DTO post(DTO dto) {
         HttpEntity<DTO> requestEntity = new HttpEntity<>(dto);
-        ResponseEntity<?> response = requestHandlerService.handleRequest(serviceUrl, HttpMethod.POST, requestEntity, getDtoType());
+        ResponseEntity<?> response = apiHttpRequestHandlerService.handleRequest(serviceUrl, HttpMethod.POST, requestEntity, getDtoType());
 
         return getDtoType().cast(response.getBody());
     }
@@ -65,7 +66,7 @@ abstract public class BaseService<DTO> implements RestCrudService<DTO> {
     public DTO put(String dtoId, DTO dto) {
         final String entireUrl = serviceUrl + ApplicationConstants.SLASH + dtoId;
         HttpEntity<DTO> requestEntity = new HttpEntity<>(dto);
-        ResponseEntity<?> response = requestHandlerService.handleRequest(entireUrl, HttpMethod.PUT, requestEntity, getDtoType());
+        ResponseEntity<?> response = apiHttpRequestHandlerService.handleRequest(entireUrl, HttpMethod.PUT, requestEntity, getDtoType());
 
         return getDtoType().cast(response.getBody());
     }
@@ -73,7 +74,7 @@ abstract public class BaseService<DTO> implements RestCrudService<DTO> {
     @Override
     public String delete(String dtoId) {
         final String entireUrl = serviceUrl + ApplicationConstants.SLASH + dtoId;
-        ResponseEntity<?> response = requestHandlerService.handleRequest(entireUrl, HttpMethod.DELETE, null, getDtoType());
+        ResponseEntity<?> response = apiHttpRequestHandlerService.handleRequest(entireUrl, HttpMethod.DELETE, null, getDtoType());
 
         return response.getStatusCode().toString();
     }

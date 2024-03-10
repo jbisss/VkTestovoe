@@ -1,4 +1,4 @@
-package ru.vktestovoe.jbisss.service;
+package ru.vktestovoe.jbisss.service.api;
 
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -13,7 +13,7 @@ import org.springframework.web.client.RestTemplate;
 
 @Service
 @RequiredArgsConstructor
-public class RequestHandlerService {
+public class ApiHttpRequestHandlerService {
 
     private final RestTemplate restTemplate;
 

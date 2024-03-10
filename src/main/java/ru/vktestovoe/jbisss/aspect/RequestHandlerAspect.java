@@ -18,7 +18,7 @@ import java.util.Optional;
 @Component
 public class RequestHandlerAspect {
 
-    @Around("execution (* ru.vktestovoe.jbisss.service.RequestHandlerService.handleRequest(..))")
+    @Around("execution (* ru.vktestovoe.jbisss.service.api.ApiHttpRequestHandlerService.handleRequest(..))")
     public Object logRequestsToApi(ProceedingJoinPoint pjp) {
         long startTime = System.currentTimeMillis();
 
