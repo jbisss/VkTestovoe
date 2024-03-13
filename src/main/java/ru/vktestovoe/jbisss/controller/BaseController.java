@@ -37,7 +37,7 @@ abstract public class BaseController<DTO> {
     }
 
     @DeleteMapping("/{id}")
-    public void delete(@PathVariable String id) {
-        restCrudService.delete(id);
+    public String delete(@PathVariable String id) {
+        return restCrudService.delete(id);
     }
 }
