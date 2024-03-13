@@ -29,7 +29,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain postsFilterChain(HttpSecurity http) throws Exception {
-        http.securityMatcher("/posts/**")
+        http.securityMatcher("/api/posts/**")
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest()
                         .hasAnyRole("ADMIN", "POSTS"))
@@ -40,7 +40,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain albumsFilterChain(HttpSecurity http) throws Exception {
-        http.securityMatcher("/albums/**")
+        http.securityMatcher("/api/albums/**")
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest()
                         .hasAnyRole("ADMIN", "ALBUMS"))
@@ -51,7 +51,7 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain usersFilterChain(HttpSecurity http) throws Exception {
-        http.securityMatcher("/users/**")
+        http.securityMatcher("/api/users/**")
                 .authorizeHttpRequests(authorize -> authorize
                         .anyRequest()
                         .hasAnyRole("ADMIN", "USERS"))

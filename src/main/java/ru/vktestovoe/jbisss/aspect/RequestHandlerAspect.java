@@ -8,6 +8,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -30,9 +33,9 @@ public class RequestHandlerAspect {
                 .filter(arg -> arg instanceof HttpEntity<?>)
                 .findFirst();
         if (requestEntity.isPresent()) {
-            log.info("Request: {} {} with body {} started", httpMethod, url, ((HttpEntity<?>) requestEntity.get()).getBody());
+            log.info("Request: {} {} with body {} started by user {}", httpMethod, url, ((HttpEntity<?>) requestEntity.get()).getBody(), getCurrentUserDetails());
         } else {
-            log.info("Request: {} {} started", httpMethod, url);
+            log.info("Request: {} {} started by user {}", httpMethod, url, getCurrentUserDetails());
         }
 
         ResponseEntity<?> result;
@@ -45,5 +48,26 @@ public class RequestHandlerAspect {
         long executionTime = System.currentTimeMillis() - startTime;
         log.info("Request: {} {} ended in {}ms with {}", httpMethod, url, executionTime, statusCode);
         return result;
+    }
+
+    private String getCurrentUserDetails() {
+        StringBuilder userDetailsResult = new StringBuilder();
+        final String WITH_ROLES = " with roles: ";
+
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if (authentication != null && authentication.isAuthenticated()) {
+            Object principal = authentication.getPrincipal();
+
+            if (principal instanceof UserDetails userDetails) {
+                String username = userDetails.getUsername();
+                userDetailsResult.append(username);
+                if (!userDetails.getAuthorities().isEmpty()) {
+                    userDetailsResult.append(WITH_ROLES);
+                    userDetails.getAuthorities().forEach(authority -> userDetailsResult.append(authority.getAuthority()));
+                }
+            }
+        }
+        return userDetailsResult.toString();
     }
 }
