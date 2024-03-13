@@ -19,7 +19,8 @@ public class CommentService extends BaseService<CommentDto>{
 
     @SuppressWarnings("unchecked")
     public List<CommentDto> getCommentsByPostId(String postId) {
-        final String entireUrl = serviceUrl + ApplicationConstants.SLASH + postId;
+        final String postIdParam = "postId=";
+        final String entireUrl = serviceUrl + ApplicationConstants.REQUEST_PARAM + postIdParam + postId;
         ParameterizedTypeReference<List<CommentDto>> responseType = new ParameterizedTypeReference<>() {};
         ResponseEntity<?> response = apiRequestService.handleRequest(entireUrl, HttpMethod.GET, null, responseType);
 

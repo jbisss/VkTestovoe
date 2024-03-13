@@ -3,6 +3,7 @@ package ru.vktestovoe.jbisss.config;
 public interface ApplicationConstants {
 
     String SLASH = "/";
+    String REQUEST_PARAM = "?";
 
     interface Url {
 
